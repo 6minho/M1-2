@@ -11,8 +11,8 @@
 
 | 구분 | URL |
 |---|---|
-| 프론트엔드 (Vercel) | https://YOUR-APP.vercel.app |
-| 백엔드 API (Render) | https://YOUR-API.onrender.com |
+| 프론트엔드 (Vercel) | https://m1-2-frontend-flax.vercel.app |
+| 백엔드 API (Render) | https://m1-a-api.onrender.com |
 | Swagger UI | https://YOUR-API.onrender.com/docs |
 
 > Render 무료 티어는 15분간 요청이 없으면 잠듭니다. 첫 접속 시 최대 1분 정도 걸릴 수 있으며,
