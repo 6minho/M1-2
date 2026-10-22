@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>엔화 AI 비서</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="config.js"></script>
+</head>
+<body>
+  <div id="server-banner" class="banner" hidden>
+    서버를 깨우는 중이에요 (무료 서버라 첫 요청은 최대 1분 걸릴 수 있어요)…
+  </div>
+
+  <header class="top">
+    <div class="brand">
+      <span class="brand-mark">¥</span>
+      <div>
+        <h1>엔화 AI 비서</h1>
+        <p class="sub">100엔당 원화 환율 데이터를 아는 AI</p>
+      </div>
+    </div>
+    <nav class="tabs">
+      <button class="tab active" data-tab="chat">채팅</button>
+      <button class="tab" data-tab="data">데이터 관리</button>
+    </nav>
+  </header>
+
+  <!-- 데이터 요약 -->
+  <section class="summary" id="summary">
+    <div class="stat"><span class="label">기간</span><span class="val" id="s-period">-</span></div>
+    <div class="stat"><span class="label">데이터 수</span><span class="val" id="s-count">-</span></div>
+    <div class="stat"><span class="label">최신</span><span class="val mono" id="s-latest">-</span></div>
+    <div class="stat"><span class="label">평균</span><span class="val mono" id="s-avg">-</span></div>
+    <div class="stat"><span class="label">최고 / 최저</span><span class="val mono" id="s-range">-</span></div>
+    <div class="stat wide"><span class="label">최근 추세</span><span class="val" id="s-trend">-</span></div>
+  </section>
+
+  <main>
+    <!-- 채팅 탭 -->
+    <section class="panel chat-layout" id="tab-chat">
+      <aside class="history">
+        <div class="history-head">
+          <h2>대화 기록</h2>
+          <button class="btn small" id="new-chat">+ 새 대화</button>
+        </div>
+        <ul id="conv-list" class="conv-list"></ul>
+      </aside>
+
+      <div class="chat">
+        <div class="messages" id="messages">
+          <div class="empty" id="chat-empty">
+            <p>저장된 환율 데이터를 바탕으로 답해 드려요.</p>
+            <div class="suggest">
+              <button class="chip">요즘 엔화 추세 어때?</button>
+              <button class="chip">가장 쌌던 날은 언제야?</button>
+              <button class="chip">6월이랑 비교하면 얼마나 내렸어?</button>
+            </div>
+          </div>
+        </div>
+        <form class="composer" id="chat-form">
+          <input id="chat-input" maxlength="1000" placeholder="엔화에 대해 물어보세요" autocomplete="off" />
+          <button class="btn primary" id="chat-send">보내기</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- 데이터 관리 탭 -->
+    <section class="panel" id="tab-data" hidden>
+      <form class="data-form" id="data-form">
+        <h2 id="form-title">새 데이터 추가</h2>
+        <label>날짜 <input type="date" id="f-date" required /></label>
+        <label>환율 (원/100엔) <input type="number" id="f-value" step="0.01" min="0.01" required /></label>
+        <label class="grow">메모 <input type="text" id="f-memo" maxlength="200" /></label>
+        <div class="form-actions">
+          <button class="btn primary" id="f-submit">추가</button>
+          <button type="button" class="btn" id="f-cancel" hidden>취소</button>
+        </div>
+        <p class="form-msg" id="form-msg"></p>
+      </form>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>날짜</th><th class="num">환율</th><th>메모</th><th></th></tr></thead>
+          <tbody id="data-rows"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
