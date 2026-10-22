@@ -176,6 +176,27 @@ python -m http.server 5500     # http://localhost:5500
 - Environment Variables에 `API_BASE_URL` 추가 → 배포
 - 배포된 Vercel 주소를 Render의 `ALLOWED_ORIGINS`에 추가
 
+## 배포 확인 (런타임 증거)
+
+배포된 URL에 실제로 요청한 결과입니다 (2026-10-22 측정). 전체 로그: [docs/deploy-check.txt](docs/deploy-check.txt)
+
+| 확인 대상 | 요청 | 결과 |
+|---|---|---|
+| 백엔드 헬스 체크 | `GET https://m1-a-api.onrender.com/health` | `200 OK`, `{"status":"ok"}` |
+| Swagger UI | `GET https://m1-a-api.onrender.com/docs` | `200 OK`, `<title>엔화 AI 비서 API - Swagger UI</title>` |
+| 데이터 요약 API | `GET https://m1-a-api.onrender.com/api/data/summary` | `200 OK`, `"count":165`, `"trend":"하락 (최근 20영업일 평균이 직전 대비 -2.12%)"` |
+| 프론트엔드 | `GET https://m1-2-frontend-flax.vercel.app/` | `200 OK` (Server: Vercel), `<title>엔화 AI 비서</title>` |
+
+### 배포된 프론트엔드 접속 화면
+배포된 Vercel 주소에서 요약 카드(165개)와 대화 기록이 Render 백엔드로부터 불러와진 화면입니다.
+
+![deploy-frontend](docs/deploy-frontend.png)
+
+### 배포된 Swagger UI (/docs) 접속 화면
+배포된 Render 주소의 `/docs`에서 `GET /api/data/summary`를 실행해 200 응답을 받은 화면입니다.
+
+![deploy-swagger](docs/deploy-swagger.png)
+
 ## 스크린샷
 
 ### 데이터 요약이 보이는 채팅 화면

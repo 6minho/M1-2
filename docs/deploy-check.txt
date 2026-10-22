@@ -1,0 +1,64 @@
+===== [1] Backend GET /health ===== 
+HTTP/1.1 200 OK
+Date: Thu, 22 Oct 2026 09:49:15 GMT
+Content-Type: application/json
+Transfer-Encoding: chunked
+Connection: keep-alive
+cf-cache-status: DYNAMIC
+rndr-id: ddace3ba-621b-4620
+Server: cloudflare
+vary: Accept-Encoding
+x-render-origin-server: uvicorn
+CF-RAY: a4e7974d987aaa77-ICN
+alt-svc: h3=":443"; ma=86400
+
+{"status":"ok"} 
+===== [2] Backend GET /docs ===== 
+HTTP/1.1 200 OK
+Date: Thu, 22 Oct 2026 09:49:16 GMT
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+rndr-id: 1ee0732c-3823-4de0
+Server: cloudflare
+vary: Accept-Encoding
+x-render-origin-server: uvicorn
+cf-cache-status: DYNAMIC
+CF-RAY: a4e7974ea89503cc-ICN
+alt-svc: h3=":443"; ma=86400
+
+    <title>엔화 AI 비서 API - Swagger UI</title>
+ 
+===== [3] Backend GET /api/data/summary ===== 
+HTTP/1.1 200 OK
+Date: Thu, 22 Oct 2026 09:49:17 GMT
+Content-Type: application/json
+Transfer-Encoding: chunked
+Connection: keep-alive
+rndr-id: e8629da9-4c14-4259
+Server: cloudflare
+vary: Accept-Encoding
+x-render-origin-server: uvicorn
+cf-cache-status: DYNAMIC
+CF-RAY: a4e7975329d28b65-ICN
+alt-svc: h3=":443"; ma=86400
+
+{"unit":"원 / 100엔","period":"2026-03-02 ~ 2026-10-21","count":165,"metrics":{"average":912.45,"max":963.91,"max_date":"2026-06-05","min":839.62,"min_date":"2026-10-21","latest":839.62,"latest_date":"2026-10-21","change_rate":-9.58},"trend":"하락 (최근 20영업일 평균이 직전 대비 -2.12%)","monthly_average":{"2026-03":939.56,"2026-04":931.3,"2026-05":942.16,"2026-06":952.02,"2026-07":917.47,"2026-08":883.54,"2026-09":868.67,"2026-10":846.83}} 
+===== [4] Frontend GET / ===== 
+HTTP/1.1 200 OK
+Accept-Ranges: bytes
+Access-Control-Allow-Origin: *
+Age: 0
+Cache-Control: public, max-age=0, must-revalidate
+Content-Disposition: inline
+Content-Length: 3953
+Content-Type: text/html; charset=utf-8
+Date: Thu, 22 Oct 2026 09:49:17 GMT
+Etag: "34915c45c631148c62e2d2d575fdfd11"
+Last-Modified: Thu, 22 Oct 2026 09:49:17 GMT
+Server: Vercel
+Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+X-Vercel-Cache: MISS
+X-Vercel-Id: icn1::nf6d7-1792662557483-66d00249063f
+
+  <title>엔화 AI 비서</title>
+        <h2 id="form-title">새 데이터 추가</h2>
