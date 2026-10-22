@@ -22,7 +22,7 @@
 
 - **Backend**: Python 3.11, FastAPI, Uvicorn, Pydantic v2
 - **DB**: Firebase Firestore (`firebase-admin`)
-- **AI**: OpenAI Chat Completions (`gpt-4o-mini`, `max_tokens=500`)
+- **AI**: OpenAI Chat Completions (코디세이 OpenAI 호환 게이트웨이, `gpt-5-mini`, `max_completion_tokens=2000`)
 - **Frontend**: HTML / CSS / JavaScript (프레임워크 없음)
 - **Deploy**: Render (백엔드), Vercel (프론트엔드)
 
@@ -60,7 +60,6 @@
 
 ```
 yen-ai-assistant/
-├── render.yaml                  # Render Blueprint (rootDir: backend)
 ├── backend/
 │   ├── main.py                  # FastAPI 앱, CORS, 라우터 등록
 │   ├── requirements.txt
@@ -119,7 +118,7 @@ yen-ai-assistant/
 1. `data_service.get_summary()`로 데이터 요약 생성
 2. 요약을 시스템 프롬프트의 `[사용자 데이터 요약]` 블록에 삽입
 3. (이어지는 대화면) 기존 대화의 최근 10개 메시지를 함께 전달
-4. GPT 호출 (`max_tokens=500`)
+4. GPT 호출 (`max_completion_tokens=2000`)
 5. 질문/답변을 `conversations`에 자동 저장 (새 대화면 첫 질문으로 제목 생성)
 
 GPT는 실시간 데이터를 모르지만, 매 요청마다 최신 요약을 시스템 프롬프트로 받기 때문에
@@ -153,12 +152,13 @@ python -m http.server 5500     # http://localhost:5500
 
 | 이름 | 위치 | 설명 |
 |---|---|---|
-| `OPENAI_API_KEY` | 백엔드 | OpenAI API 키 |
+| `OPENAI_API_KEY` | 백엔드 | OpenAI API 키 (코디세이 발급 키) |
+| `OPENAI_BASE_URL` | 백엔드 | OpenAI 호환 API 주소 (`https://copa.codyssey.kr/v1`) |
 | `FIREBASE_SERVICE_ACCOUNT_JSON` | 백엔드(Render) | 서비스 계정 키 JSON 전체를 한 줄 문자열로 |
 | `FIREBASE_SERVICE_ACCOUNT_PATH` | 백엔드(로컬) | 서비스 계정 키 파일 경로 (JSON 대신 사용) |
-| `ALLOWED_ORIGINS` | 백엔드 | CORS 허용 도메인, 쉼표 구분 (예: `https://your-app.vercel.app`) |
-| `OPENAI_MODEL` | 백엔드(선택) | 기본 `gpt-4o-mini` |
-| `OPENAI_MAX_TOKENS` | 백엔드(선택) | 기본 `500` |
+| `ALLOWED_ORIGINS` | 백엔드 | CORS 허용 도메인, 쉼표 구분 (예: `https://m1-2-frontend-flax.vercel.app`) |
+| `OPENAI_MODEL` | 백엔드 | `gpt-5-mini` |
+| `OPENAI_MAX_TOKENS` | 백엔드 | `2000` (gpt-5 계열은 추론 토큰도 쓰므로 넉넉히) |
 | `API_BASE_URL` | 프론트(Vercel) | 백엔드 주소 (예: `https://your-api.onrender.com`) |
 
 키 파일과 `.env`는 `.gitignore`에 등록되어 커밋되지 않습니다.
@@ -169,8 +169,7 @@ python -m http.server 5500     # http://localhost:5500
 - Root Directory: `backend`
 - Build: `pip install -r requirements.txt`
 - Start: `uvicorn main:app --host 0.0.0.0 --port $PORT`
-- Environment에 `OPENAI_API_KEY`, `FIREBASE_SERVICE_ACCOUNT_JSON`, `ALLOWED_ORIGINS`, `PYTHON_VERSION=3.11.9` 추가
-- (또는 루트의 `render.yaml`로 Blueprint 배포)
+- Environment에 `OPENAI_API_KEY`, `OPENAI_BASE_URL`, `OPENAI_MODEL`, `OPENAI_MAX_TOKENS`, `FIREBASE_SERVICE_ACCOUNT_JSON`, `ALLOWED_ORIGINS`, `PYTHON_VERSION=3.11.9` 추가
 
 **Vercel (프론트엔드)** — New Project → 같은 저장소
 - Root Directory: `frontend` (빌드/출력 설정은 `vercel.json`이 지정)
